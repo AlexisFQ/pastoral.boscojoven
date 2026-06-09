@@ -260,21 +260,21 @@
             <div class="dashboard-grid">
 
                 <div class="dashboard-card">
-                <button class="panel-btn" onclick="showPage('redEscuelas')">
-                Colegio 1
+                <button class="panel-btn" onclick="accesoColegio1()">
+                    Total Colegios
                 </button>
                 </div>
 
                 <div class="dashboard-card">
-                    <a href="#">Colegio 2</a>
+                    <a href="#">Iquique</a>
                 </div>
 
                 <div class="dashboard-card">
-                    <a href="#">Colegio 3</a>
+                    <a href="#">Alto Hospicio</a>
                 </div>
 
                 <div class="dashboard-card">
-                    <a href="#">Colegio 4</a>
+                    <a href="#">Alameda</a>
                 </div>
 
             </div>
@@ -288,19 +288,19 @@
             <div class="dashboard-grid">
 
                 <div class="dashboard-card">
-                    <a href="#">Resultados Generales</a>
+                    <a href="#">Jovenes_Colegios</a>
                 </div>
 
                 <div class="dashboard-card">
-                    <a href="#">Participación</a>
+                    <a href="#">Apoderados_Colegios</a>
                 </div>
 
                 <div class="dashboard-card">
-                    <a href="#">Bienestar Estudiantil</a>
+                    <a href="#">Educadores_Personal</a>
                 </div>
 
                 <div class="dashboard-card">
-                    <a href="#">Comparativo por Colegio</a>
+                    <a href="#">Parroquias_Santuarios</a>
                 </div>
 
             </div>
@@ -322,7 +322,21 @@
                 allowfullscreen="true">
             </iframe>
 
-            <br><br>
+        </div>
+
+        <div class="card">
+
+            <h2>Inscripción Pastoral</h2>
+
+            <iframe
+                title="Inscripción Pastoral"
+                src="https://app.powerbi.com/view?r=eyJrIjoiMWQxOTZiYjctMDA3ZS00Nzg5LThmNDktYmVhNmM1NWI0Njg4IiwidCI6ImExMmMxNDdiLTNhMGMtNGJhNi05MzRiLThhYzczOTFiYzg3NCIsImMiOjR9"
+                allowfullscreen="true">
+            </iframe>
+
+        </div>
+
+        <div class="card" style="text-align:center;">
 
             <button class="panel-btn" onclick="showPage('datos')">
                 ← Volver a Análisis de Datos
@@ -346,6 +360,17 @@ function showPage(pageId){
     });
 
     document.getElementById(pageId).classList.add('active');
+}
+
+function accesoColegio1(){
+
+    const password = prompt("Ingrese la contraseña:");
+
+    if(password === "colegio123"){
+        showPage('redEscuelas');
+    } else if(password !== null){
+        alert("Contraseña incorrecta");
+    }
 }
 </script>
 
