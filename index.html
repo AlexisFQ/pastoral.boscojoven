@@ -119,6 +119,21 @@
         border:none;
         border-radius:10px;
     }
+
+    .panel-btn{
+    background:#00509d;
+    color:white;
+    border:none;
+    padding:12px 20px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:bold;
+    }
+
+    .panel-btn:hover{
+        background:#003366;
+    }
 </style>
 </head>
 <body>
@@ -245,7 +260,9 @@
             <div class="dashboard-grid">
 
                 <div class="dashboard-card">
-                    <a href="#">Colegio 1</a>
+                <button class="panel-btn" onclick="showPage('redEscuelas')">
+                Colegio 1
+                </button>
                 </div>
 
                 <div class="dashboard-card">
@@ -291,6 +308,31 @@
         </div>
 
     </div>
+
+    <!-- PANEL RED ESCUELAS -->
+    <div id="redEscuelas" class="page">
+
+        <div class="card">
+
+            <h2>Red escuelas</h2>
+
+            <iframe
+                title="Red escuelas"
+                src="https://app.powerbi.com/view?r=eyJrIjoiMjlmZjU2YzgtNWM2MS00ZGYxLTgxY2EtYTQ2N2MyNzVlYmJhIiwidCI6ImExMmMxNDdiLTNhMGMtNGJhNi05MzRiLThhYzczOTFiYzg3NCIsImMiOjR9"
+                allowfullscreen="true">
+            </iframe>
+
+            <br><br>
+
+            <button class="panel-btn" onclick="showPage('datos')">
+                ← Volver a Análisis de Datos
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
 
 </div>
 
