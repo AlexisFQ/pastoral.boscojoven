@@ -1,188 +1,312 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Web</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background-color: #f8f9fa;
-        }
-        .hero-section {
-            background: linear-gradient(135deg, #007bff, #6610f2);
-            color: white;
-            text-align: center;
-            padding: 50px 20px;
-        }
-        .section-title {
-            margin-bottom: 20px;
-            font-weight: bold;
-        }
-        .dashboard-card {
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-        }
-        .dashboard-card:hover {
-            transform: scale(1.05);
-        }
-        iframe {
-            border: none;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portal de Gestión</title>
+
+<style>
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+        font-family: Arial, sans-serif;
+    }
+
+    body{
+        background:#f4f6f9;
+    }
+
+    header{
+        background:#003366;
+        color:white;
+        padding:20px;
+        text-align:center;
+    }
+
+    nav{
+        background:#00509d;
+        display:flex;
+        justify-content:center;
+        flex-wrap:wrap;
+        gap:10px;
+        padding:15px;
+    }
+
+    nav button{
+        background:white;
+        color:#003366;
+        border:none;
+        padding:12px 20px;
+        border-radius:8px;
+        cursor:pointer;
+        font-weight:bold;
+        transition:0.3s;
+    }
+
+    nav button:hover{
+        background:#dbe9ff;
+    }
+
+    .container{
+        padding:25px;
+    }
+
+    .page{
+        display:none;
+    }
+
+    .active{
+        display:block;
+    }
+
+    .card{
+        background:white;
+        border-radius:10px;
+        padding:20px;
+        margin-bottom:20px;
+        box-shadow:0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    h2{
+        color:#003366;
+        margin-bottom:15px;
+    }
+
+    h3{
+        margin-bottom:10px;
+        color:#00509d;
+    }
+
+    table{
+        width:100%;
+        border-collapse:collapse;
+    }
+
+    table th, table td{
+        border:1px solid #ddd;
+        padding:10px;
+        text-align:left;
+    }
+
+    table th{
+        background:#f0f4f8;
+    }
+
+    .dashboard-grid{
+        display:grid;
+        grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+        gap:15px;
+    }
+
+    .dashboard-card{
+        background:#eef4ff;
+        padding:20px;
+        border-radius:8px;
+        text-align:center;
+        border-left:5px solid #00509d;
+    }
+
+    .dashboard-card a{
+        text-decoration:none;
+        color:#003366;
+        font-weight:bold;
+    }
+
+    iframe{
+        width:100%;
+        height:600px;
+        border:none;
+        border-radius:10px;
+    }
+</style>
 </head>
 <body>
 
+<header>
+    <h1>Portal de Gestión Institucional</h1>
+</header>
 
-    <!-- Hero Section -->
-    <div class="hero-section">
-        <h1>Alexis de Jesús Quispe Fuentes</h1>
-        <p>Explora datos interactivos y resúmenes en un solo lugar.</p>
-    </div>
+<nav>
+    <button onclick="showPage('inicio')">Página Inicial</button>
+    <button onclick="showPage('procesos')">Procesos e Indicadores</button>
+    <button onclick="showPage('evaluacion')">Evaluación 360</button>
+    <button onclick="showPage('datos')">Análisis de Datos</button>
+</nav>
 
-    <!-- Descripción General -->
-    <div class="container my-5">
-        <h2 class="text-center section-title">Descripción General</h2>
-        <p class="text-center">Soy un ingeniero apasionado por la ciencia de datos, con experiencia en el tratamiento de la información, logrando no sólo mostrar resultados si no que presentándolos de manera clara y estratégica para guiar la toma de decisión y la reflexión de los hallazgos.</p>
-    </div>
-    <!-- Dashboards -->
-    <div class="container my-5">
-        <h2 class="text-center section-title">Dashboards</h2>
-        <div class="row g-4">
-            <!-- Dashboard 1 -->
-            <div class="col-md-6">
-                <div class="card dashboard-card p-3">
-                    <h4>Dashboard: Análisis Pedagogías Chile</h4>
-                    <p>En este trabajo de realizó un barrido de las diferentes carreras de pedagogías que están siendo impartidas en Chile, donde se trabaja con los planes de estudios y otras tipo de información, tales como ponderaciones o duracion de las carreras.</p>
-                    <iframe src="https://app.powerbi.com/view?r=eyJrIjoiMjk3ZGIzZmUtYjA1Yi00YTNlLWIyZjgtNWQ5NDI0MDgyNGY1IiwidCI6IjBlNTdmNzMyLTc2NzMtNDAwYy1hMWM2LTQ0ZWEzNmYyN2FhNSIsImMiOjR9" style="width:100%; height:300px;"></iframe>
-                    <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#dashboardModal1">Ver en grande</button>
-                </div>
-            </div>
-            <!-- Dashboard 2 -->
-            <div class="col-md-6">
-                <div class="card dashboard-card p-3">
-                    <h4>Dashboard: Tratamiento de encuestas de validación de Perfil de Egreso</h4>
-                    <p>Este trabajo consiste en el tratamiento de encuestas de validación de competencias del Perfil de Egreso. Fue aplicada a empleadores y académicos, en donde se les consuta que tan de acuerdo están con cada descripción de las competencias propuestas.</p>
-                    <iframe src="https://app.powerbi.com/view?r=eyJrIjoiYTBmNjRmODUtOGY0OC00MTk3LThkNDUtOTFjNWU1MTUwMmJjIiwidCI6IjBlNTdmNzMyLTc2NzMtNDAwYy1hMWM2LTQ0ZWEzNmYyN2FhNSIsImMiOjR9" style="width:100%; height:300px;"></iframe>
-                    <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#dashboardModal2">Ver en grande</button>
-                </div>
-            </div>
-            <!-- Dashboard 3 -->
-            <div class="col-md-6">
-                <div class="card dashboard-card p-3">
-                    <h4>Dashboard: Análisis de Resultados de Evaluación Nacional Diagnóstica</h4>
-                    <p>En este trabajo se realiza un análisis de los resultados obtenidos de la Evaluación Nacional Diagnóstica (END), logrando comparar los puntajes obtenidos por la institución versus los puntajes a nivel nacional.</p>
-                    <iframe src="https://app.powerbi.com/view?r=eyJrIjoiMTU3YTAyNjQtNTllNy00MjdhLTk5MjEtMzczNjhjZDI5Nzg4IiwidCI6IjBlNTdmNzMyLTc2NzMtNDAwYy1hMWM2LTQ0ZWEzNmYyN2FhNSIsImMiOjR9" style="width:100%; height:300px;"></iframe>
-                    <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#dashboardModal3">Ver en grande</button>
-                    <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#videoModal">Ver Experiencia</button>
-                </div>
-            </div>
-            <!-- Dashboard 4 -->
-            <div class="col-md-6">
-                <div class="card dashboard-card p-3">
-                    <h4>Dashboard: Análisis de asignaturas críticas</h4>
-                    <p>Se realiza un resumen con las asignaturas críticas en función de la tasa de aprobación. Me gusta destacar de este trabajo que fue diseñado con figuras en lugar de colores para facilitar la lectura de una persona daltónica</p>
-                    <iframe src="https://app.powerbi.com/view?r=eyJrIjoiNzc4MjI4ZmEtNzBmZS00YWVhLTk2MzYtMjVjNzgzODA2Y2VmIiwidCI6IjBlNTdmNzMyLTc2NzMtNDAwYy1hMWM2LTQ0ZWEzNmYyN2FhNSIsImMiOjR9" style="width:100%; height:300px;"></iframe>
-                    <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#dashboardModal4">Ver en grande</button>
-                </div>
-            </div>
+<div class="container">
+
+    <!-- PAGINA INICIAL -->
+    <div id="inicio" class="page active">
+
+        <div class="card">
+            <h2>Calendario</h2>
+
+            <!-- Puedes reemplazar este calendario por Google Calendar -->
+            <iframe src="https://calendar.google.com/calendar/embed?src=es.cl%23holiday%40group.v.calendar.google.com"></iframe>
+
         </div>
-    </div>
 
-    <!-- Modal Dashboard 1 -->
-    <div class="modal fade" id="dashboardModal1" tabindex="-1" aria-labelledby="dashboardModal1Label" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="dashboardModal1Label">Dashboard: Análisis Pedagogías Chile</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <iframe src="https://app.powerbi.com/view?r=eyJrIjoiMjk3ZGIzZmUtYjA1Yi00YTNlLWIyZjgtNWQ5NDI0MDgyNGY1IiwidCI6IjBlNTdmNzMyLTc2NzMtNDAwYy1hMWM2LTQ0ZWEzNmYyN2FhNSIsImMiOjR9" style="width:100%; height:80vh;"></iframe>
-                </div>
-            </div>
+        <div class="card">
+            <h2>Recordatorios y Solicitudes</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Solicitud</th>
+                        <th>Responsable</th>
+                        <th>Fecha de Caducidad</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>Actualización Indicadores Mayo</td>
+                        <td>Juan Pérez</td>
+                        <td>15/08/2025</td>
+                        <td>Pendiente</td>
+                    </tr>
+
+                    <tr>
+                        <td>Informe de Gestión</td>
+                        <td>María Soto</td>
+                        <td>20/08/2025</td>
+                        <td>En Proceso</td>
+                    </tr>
+
+                    <tr>
+                        <td>Validación Encuesta</td>
+                        <td>Equipo TI</td>
+                        <td>25/08/2025</td>
+                        <td>Pendiente</td>
+                    </tr>
+                </tbody>
+            </table>
+
         </div>
+
     </div>
-    
-    <!-- Modal Dashboard 2 -->
-    <div class="modal fade" id="dashboardModal2" tabindex="-1" aria-labelledby="dashboardModal2Label" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="dashboardModal2Label">Dashboard: Tratamiento de encuestas de validación de Perfil de Egreso</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <iframe src="https://app.powerbi.com/view?r=eyJrIjoiYTBmNjRmODUtOGY0OC00MTk3LThkNDUtOTFjNWU1MTUwMmJjIiwidCI6IjBlNTdmNzMyLTc2NzMtNDAwYy1hMWM2LTQ0ZWEzNmYyN2FhNSIsImMiOjR9" style="width:100%; height:80vh;"></iframe>
-                </div>
-            </div>
+
+    <!-- PROCESOS -->
+    <div id="procesos" class="page">
+
+        <div class="card">
+            <h2>Procesos e Indicadores</h2>
+
+            <p>
+                En esta sección se pueden incorporar:
+            </p>
+
+            <br>
+
+            <ul>
+                <li>Indicadores estratégicos.</li>
+                <li>Indicadores académicos.</li>
+                <li>Indicadores pastorales.</li>
+                <li>Indicadores de convivencia escolar.</li>
+                <li>Documentación de procesos.</li>
+            </ul>
+
         </div>
+
     </div>
 
-    <!-- Modal Dashboard 3 -->
-    <div class="modal fade" id="dashboardModal3" tabindex="-1" aria-labelledby="dashboardModal3Label" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="dashboardModal3Label">Dashboard: Análisis de Resultados de Evaluación Nacional Diagnóstica</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <iframe src="https://app.powerbi.com/view?r=eyJrIjoiMTU3YTAyNjQtNTllNy00MjdhLTk5MjEtMzczNjhjZDI5Nzg4IiwidCI6IjBlNTdmNzMyLTc2NzMtNDAwYy1hMWM2LTQ0ZWEzNmYyN2FhNSIsImMiOjR9" style="width:100%; height:80vh;"></iframe>
-                </div>
-            </div>
+    <!-- EVALUACION 360 -->
+    <div id="evaluacion" class="page">
+
+        <div class="card">
+            <h2>Evaluación 360</h2>
+
+            <p>
+                Espacio destinado a resultados, formularios e informes de evaluación 360°.
+            </p>
+
+            <br>
+
+            <ul>
+                <li>Autoevaluación</li>
+                <li>Evaluación de jefatura</li>
+                <li>Evaluación de pares</li>
+                <li>Informe consolidado</li>
+            </ul>
+
         </div>
+
     </div>
 
-    <!-- Modal Video -->
-    <div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="videoModalLabel">Video Relacionado</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <!-- ANALISIS DE DATOS -->
+    <div id="datos" class="page">
+
+        <div class="card">
+
+            <h2>Paneles Power BI por Colegios</h2>
+
+            <div class="dashboard-grid">
+
+                <div class="dashboard-card">
+                    <a href="#">Colegio 1</a>
                 </div>
-                <div class="modal-body">
-                    <iframe 
-                        src="https://www.youtube.com/watch?v=FigldJgWtN4&ab_channel=AlexisQuispe" 
-                        style="width:100%; height:450px;" 
-                        allowfullscreen>
-                    </iframe>
+
+                <div class="dashboard-card">
+                    <a href="#">Colegio 2</a>
                 </div>
+
+                <div class="dashboard-card">
+                    <a href="#">Colegio 3</a>
+                </div>
+
+                <div class="dashboard-card">
+                    <a href="#">Colegio 4</a>
+                </div>
+
             </div>
-        </div>
-    </div>
 
-    <!-- Modal Dashboard 4 -->
-    <div class="modal fade" id="dashboardModal4" tabindex="-1" aria-labelledby="dashboardModal4Label" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="dashboardModal4Label">Dashboard: Análisis de asignaturas críticas</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="card">
+
+            <h2>Encuesta Juvenil Salesiana</h2>
+
+            <div class="dashboard-grid">
+
+                <div class="dashboard-card">
+                    <a href="#">Resultados Generales</a>
                 </div>
-                <div class="modal-body">
-                    <iframe src="https://app.powerbi.com/view?r=eyJrIjoiNzc4MjI4ZmEtNzBmZS00YWVhLTk2MzYtMjVjNzgzODA2Y2VmIiwidCI6IjBlNTdmNzMyLTc2NzMtNDAwYy1hMWM2LTQ0ZWEzNmYyN2FhNSIsImMiOjR9" style="width:100%; height:80vh;"></iframe>
+
+                <div class="dashboard-card">
+                    <a href="#">Participación</a>
                 </div>
+
+                <div class="dashboard-card">
+                    <a href="#">Bienestar Estudiantil</a>
+                </div>
+
+                <div class="dashboard-card">
+                    <a href="#">Comparativo por Colegio</a>
+                </div>
+
             </div>
+
         </div>
+
     </div>
 
-    
-    <!-- Contacto -->
-    <div class="container my-5">
-        <h2 class="text-center section-title">Contacto</h2>
-        <p class="text-center">Si tienes alguna duda o necesitas soporte, no dudes en contactarme a <a href="mailto:">alexis.qf19@gmail.com</a>.</p>
-    </div>
+</div>
 
-    <!-- Footer -->
-    <footer class="text-center py-4" style="background-color: #343a40; color: white;">
-        <p>&copy; 2024. Todos los derechos reservados.</p>
-    </footer>
+<script>
+function showPage(pageId){
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    const pages = document.querySelectorAll('.page');
+
+    pages.forEach(page=>{
+        page.classList.remove('active');
+    });
+
+    document.getElementById(pageId).classList.add('active');
+}
+</script>
+
 </body>
 </html>
 
