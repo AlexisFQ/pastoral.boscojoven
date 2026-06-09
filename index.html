@@ -49,7 +49,7 @@
     }
 
     .container{
-        padding:25px;
+        padding:10px;
     }
 
     .page{
@@ -63,7 +63,7 @@
     .card{
         background:white;
         border-radius:10px;
-        padding:20px;
+        padding:10px;
         margin-bottom:20px;
         box-shadow:0 2px 8px rgba(0,0,0,0.1);
     }
@@ -134,6 +134,96 @@
     .panel-btn:hover{
         background:#003366;
     }
+
+    .info-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:25px;
+    margin-top:20px;
+    }
+
+    .info-item{
+        text-align:center;
+    }
+
+    .placeholder-img{
+        width:100%;
+        height:220px;
+        background:#2f6287;
+        color:white;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        border-radius:4px;
+        font-size:22px;
+        font-weight:bold;
+        margin-bottom:15px;
+    }
+
+    .info-item h3{
+        margin-bottom:15px;
+        color:#003366;
+    }
+
+    .info-item ul{
+        text-align:left;
+        padding-left:20px;
+    }
+
+    .info-item li{
+        margin-bottom:10px;
+    }
+
+    .sheet-frame{
+        width:100%;
+        height:900px;
+        border:none;
+        border-radius:10px;
+        background:white;
+    }
+
+    .dropdown-card{
+        position:relative;
+    }
+
+    .dropdown-btn{
+        background:none;
+        border:none;
+        font-size:16px;
+        font-weight:bold;
+        color:#003366;
+        cursor:pointer;
+    }
+
+    .dropdown-content{
+        display:none;
+        position:absolute;
+        top:100%;
+        left:0;
+        min-width:220px;
+        background:white;
+        border:1px solid #ddd;
+        border-radius:8px;
+        box-shadow:0 4px 10px rgba(0,0,0,0.15);
+        z-index:1000;
+        text-align:left;
+    }
+
+    .dropdown-content a{
+        display:block;
+        padding:12px;
+        color:#003366;
+        text-decoration:none;
+    }
+
+    .dropdown-content a:hover{
+        background:#f0f4f8;
+    }
+
+    .dropdown-card:hover .dropdown-content{
+        display:block;
+    }
+
 </style>
 </head>
 <body>
@@ -155,6 +245,83 @@
     <div id="inicio" class="page active">
 
         <div class="card">
+
+            <h2>Información General</h2>
+
+            <div class="info-grid">
+
+                <!-- EQUIPO PJ -->
+                <div class="info-item">
+
+                    <div class="placeholder-img">
+                        Imagen
+                    </div>
+
+                    <h3>EQUIPO PJ</h3>
+
+                    <ul>
+                        <li>Actas 2026</li>
+                        <li>Tareas [Lista]</li>
+                        <li>Tareas [Formulario]</li>
+                        <li>Prompts [Nómina]</li>
+                    </ul>
+
+                </div>
+
+                <!-- PEPSI -->
+                <div class="info-item">
+
+                    <div class="placeholder-img">
+                        Imagen
+                    </div>
+
+                    <h3>PEPSI</h3>
+
+                    <ul>
+                        <li>[DOC]</li>
+                        <li>[Planillas]</li>
+                        <li>[Panel Monitoreo]</li>
+                        <li>Hoja de Ruta 2024-2026</li>
+                    </ul>
+
+                </div>
+
+                <!-- CALENDARIOS -->
+                <div class="info-item">
+
+                    <div class="placeholder-img">
+                        Imagen
+                    </div>
+
+                    <h3>CALENDARIOS</h3>
+
+                    <ul>
+                        <li>Calendario Inspectorial 2026</li>
+                        <li>Calendario 2026 [Obras]</li>
+                        <li>Viajes / Visitas [Interno]</li>
+                    </ul>
+
+                </div>
+
+                <!-- CASA INSPECTORIAL -->
+                <div class="info-item">
+
+                    <div class="placeholder-img">
+                        Imagen
+                    </div>
+
+                    <h3>CASA INSPECTORIAL</h3>
+
+                    <ul>
+                        <li>Espacios C. Inspectorial</li>
+                        <li>Salidas / permisos</li>
+                        <li>Solicitud de gastos</li>
+                    </ul>
+
+                </div>
+
+            </div>
+
             <h2>Calendario</h2>
 
             <!-- Puedes reemplazar este calendario por Google Calendar -->
@@ -207,21 +374,17 @@
     <div id="procesos" class="page">
 
         <div class="card">
+
             <h2>Procesos e Indicadores</h2>
 
-            <p>
-                En esta sección se pueden incorporar:
+            <p style="margin-bottom:15px;">
+                Seguimiento de procesos e indicadores institucionales.
             </p>
 
-            <br>
-
-            <ul>
-                <li>Indicadores estratégicos.</li>
-                <li>Indicadores académicos.</li>
-                <li>Indicadores pastorales.</li>
-                <li>Indicadores de convivencia escolar.</li>
-                <li>Documentación de procesos.</li>
-            </ul>
+            <iframe
+                class="sheet-frame"
+                src="https://docs.google.com/spreadsheets/d/1VJT4s7DOkluQo9eLVigdzkDGBLkWrhfKf_mdiQJN8Qo/preview">
+            </iframe>
 
         </div>
 
@@ -255,7 +418,7 @@
 
         <div class="card">
 
-            <h2>Paneles Power BI por Colegios</h2>
+            <h2>Informe por Colegios + Inscripción Pastoral</h2>
 
             <div class="dashboard-grid">
 
@@ -266,15 +429,15 @@
                 </div>
 
                 <div class="dashboard-card">
-                    <a href="#">Iquique</a>
+                    <a href="#">Colegio 1</a>
                 </div>
 
                 <div class="dashboard-card">
-                    <a href="#">Alto Hospicio</a>
+                    <a href="#">Colegio 2</a>
                 </div>
 
                 <div class="dashboard-card">
-                    <a href="#">Alameda</a>
+                    <a href="#">Colegio 3</a>
                 </div>
 
             </div>
@@ -287,8 +450,19 @@
 
             <div class="dashboard-grid">
 
-                <div class="dashboard-card">
-                    <a href="#">Jovenes_Colegios</a>
+                <div class="dashboard-card dropdown-card">
+
+                    <button class="dropdown-btn">
+                        Jovenes_Colegios ▼
+                    </button>
+
+                    <div class="dropdown-content">
+                        <a href="#" onclick="showPage('ejsTodos')">Todos</a>
+                        <a href="#">Colegio 1</a>
+                        <a href="#">Colegio 2</a>
+                        <a href="#">Colegio 3</a>
+                    </div>
+
                 </div>
 
                 <div class="dashboard-card">
@@ -331,6 +505,31 @@
             <iframe
                 title="Inscripción Pastoral"
                 src="https://app.powerbi.com/view?r=eyJrIjoiMWQxOTZiYjctMDA3ZS00Nzg5LThmNDktYmVhNmM1NWI0Njg4IiwidCI6ImExMmMxNDdiLTNhMGMtNGJhNi05MzRiLThhYzczOTFiYzg3NCIsImMiOjR9"
+                allowfullscreen="true">
+            </iframe>
+
+        </div>
+
+        <div class="card" style="text-align:center;">
+
+            <button class="panel-btn" onclick="showPage('datos')">
+                ← Volver a Análisis de Datos
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- ENCUESTA JUVENIL SALESIANA - TODOS -->
+    <div id="ejsTodos" class="page">
+
+        <div class="card">
+
+            <h2>Encuesta Juvenil Salesiana - Todos</h2>
+
+            <iframe
+                title="Encuesta Juvenil Salesiana"
+                src="https://app.powerbi.com/view?r=eyJrIjoiNmVhNmY3YjctMjIxNC00YWNmLTg2M2UtNjRjMTUzZGYyNDgyIiwidCI6ImExMmMxNDdiLTNhMGMtNGJhNi05MzRiLThhYzczOTFiYzg3NCIsImMiOjR9"
                 allowfullscreen="true">
             </iframe>
 
