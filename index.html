@@ -1,331 +1,114 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pastoral Juvenil</title>
-
-<style>
-    *{
-        margin:0;
-        padding:0;
-        box-sizing:border-box;
-        font-family: Arial, sans-serif;
-    }
-
-    body{
-        background:#f4f6f9;
-    }
-
-    header{
-        background:#003366;
-        color:white;
-        padding:20px;
-        text-align:center;
-    }
-
-    nav{
-        background:#00509d;
-        display:flex;
-        justify-content:center;
-        flex-wrap:wrap;
-        gap:10px;
-        padding:15px;
-    }
-
-    nav button{
-        background:white;
-        color:#003366;
-        border:none;
-        padding:12px 20px;
-        border-radius:8px;
-        cursor:pointer;
-        font-weight:bold;
-        transition:0.3s;
-    }
-
-    nav button:hover{
-        background:#dbe9ff;
-    }
-
-    .container{
-        padding:10px;
-    }
-
-    .page{
-        display:none;
-    }
-
-    .active{
-        display:block;
-    }
-
-    .card{
-        background:white;
-        border-radius:10px;
-        padding:10px;
-        margin-bottom:20px;
-        box-shadow:0 2px 8px rgba(0,0,0,0.1);
-    }
-
-    h2{
-        color:#003366;
-        margin-bottom:15px;
-    }
-
-    h3{
-        margin-bottom:10px;
-        color:#00509d;
-    }
-
-    table{
-        width:100%;
-        border-collapse:collapse;
-    }
-
-    table th, table td{
-        border:1px solid #ddd;
-        padding:10px;
-        text-align:left;
-    }
-
-    table th{
-        background:#f0f4f8;
-    }
-
-    .dashboard-grid{
-        display:grid;
-        grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-        gap:15px;
-    }
-
-    .dashboard-card{
-        background:#eef4ff;
-        padding:20px;
-        border-radius:8px;
-        text-align:center;
-        border-left:5px solid #00509d;
-    }
-
-    .dashboard-card a{
-        text-decoration:none;
-        color:#003366;
-        font-weight:bold;
-    }
-
-    iframe{
-        width:100%;
-        height:600px;
-        border:none;
-        border-radius:10px;
-    }
-
-    .panel-btn{
-    background:#00509d;
-    color:white;
-    border:none;
-    padding:12px 20px;
-    border-radius:8px;
-    cursor:pointer;
-    font-size:16px;
-    font-weight:bold;
-    }
-
-    .panel-btn:hover{
-        background:#003366;
-    }
-
-    .info-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-    gap:25px;
-    margin-top:20px;
-    }
-
-    .info-item{
-        text-align:center;
-    }
-
-    .placeholder-img{
-        width:100%;
-        height:220px;
-        background:#2f6287;
-        color:white;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        border-radius:4px;
-        font-size:22px;
-        font-weight:bold;
-        margin-bottom:15px;
-    }
-
-    .info-item h3{
-        margin-bottom:15px;
-        color:#003366;
-    }
-
-    .info-item ul{
-        text-align:left;
-        padding-left:20px;
-    }
-
-    .info-item li{
-        margin-bottom:10px;
-    }
-
-    .sheet-frame{
-        width:100%;
-        height:900px;
-        border:none;
-        border-radius:10px;
-        background:white;
-    }
-
-    .dropdown-card{
-        position:relative;
-    }
-
-    .dropdown-btn{
-        background:none;
-        border:none;
-        font-size:16px;
-        font-weight:bold;
-        color:#003366;
-        cursor:pointer;
-    }
-
-    .dropdown-content{
-        display:none;
-        position:absolute;
-        top:100%;
-        left:0;
-        min-width:220px;
-        background:white;
-        border:1px solid #ddd;
-        border-radius:8px;
-        box-shadow:0 4px 10px rgba(0,0,0,0.15);
-        z-index:1000;
-        text-align:left;
-    }
-
-    .dropdown-content a{
-        display:block;
-        padding:12px;
-        color:#003366;
-        text-decoration:none;
-    }
-
-    .dropdown-content a:hover{
-        background:#f0f4f8;
-    }
-
-    .dropdown-card:hover .dropdown-content{
-        display:block;
-    }
-
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pastoral Juvenil</title>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
+<section id="globalLogin" class="login-screen">
+    <div class="card access-card">
+        <div class="access-panel login-panel">
+            <div class="login-heading">
+                <h1>Gesti&oacute;n Pastoral Juvenil</h1>
+                <p class="section-intro">
+                    Ingresa tus credenciales para continuar.
+                </p>
+            </div>
+
+            <form id="globalLoginForm" class="access-form">
+                <label for="globalUser">Usuario</label>
+                <input
+                    id="globalUser"
+                    name="user"
+                    type="text"
+                    autocomplete="username"
+                    required
+                >
+
+                <label for="globalPassword">Contrase&ntilde;a</label>
+                <input
+                    id="globalPassword"
+                    name="password"
+                    type="password"
+                    autocomplete="current-password"
+                    required
+                >
+
+                <p id="globalLoginMessage" class="access-message" aria-live="polite"></p>
+
+                <button type="submit" class="panel-btn">Ingresar</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<div id="appShell" class="app-shell is-locked">
+
 <header>
-    <h1>Gestión Pastoral Juvenil.</h1>
+    <h1>Gesti&oacute;n Pastoral Juvenil.</h1>
 </header>
 
-<nav>
-    <button onclick="showPage('inicio')">Página Inicial</button>
-    <button onclick="showPage('procesos')">Procesos e Indicadores</button>
-    <button onclick="showPage('evaluacion')">Evaluación 360</button>
-    <button onclick="showPage('datos')">Análisis de Datos</button>
-</nav>
+<nav id="mainNav" class="main-nav" aria-label="Navegaci&oacute;n principal"></nav>
 
-<div class="container">
+<div class="analytics-toolbar">
+    <span id="globalSessionLabel">Sesi&oacute;n activa</span>
+    <button type="button" id="globalLogout" class="secondary-btn">Cerrar sesi&oacute;n</button>
+</div>
+
+<main class="container">
 
     <!-- PAGINA INICIAL -->
-    <div id="inicio" class="page active">
+    <section id="inicio" class="page active">
 
         <div class="card">
 
-            <h2>Información General</h2>
+            <h2>Informaci&oacute;n General</h2>
 
             <div class="info-grid">
 
-                <!-- EQUIPO PJ -->
-                <div class="info-item">
-
-                    <div class="placeholder-img">
-                        Imagen
-                    </div>
+                <div class="info-item" data-home-section="equipo-pj">
+                    <div class="placeholder-img">Imagen</div>
 
                     <h3>EQUIPO PJ</h3>
 
-                    <ul>
-                        <li>Actas 2026</li>
-                        <li>Tareas [Lista]</li>
-                        <li>Tareas [Formulario]</li>
-                        <li>Prompts [Nómina]</li>
-                    </ul>
-
+                    <div class="link-list" data-home-links="equipo-pj"></div>
                 </div>
 
-                <!-- PEPSI -->
-                <div class="info-item">
-
-                    <div class="placeholder-img">
-                        Imagen
-                    </div>
+                <div class="info-item" data-home-section="pepsi">
+                    <div class="placeholder-img">Imagen</div>
 
                     <h3>PEPSI</h3>
 
-                    <ul>
-                        <li>[DOC]</li>
-                        <li>[Planillas]</li>
-                        <li>[Panel Monitoreo]</li>
-                        <li>Hoja de Ruta 2024-2026</li>
-                    </ul>
-
+                    <div class="link-list" data-home-links="pepsi"></div>
                 </div>
 
-                <!-- CALENDARIOS -->
-                <div class="info-item">
-
-                    <div class="placeholder-img">
-                        Imagen
-                    </div>
+                <div class="info-item" data-home-section="calendarios">
+                    <div class="placeholder-img">Imagen</div>
 
                     <h3>CALENDARIOS</h3>
 
-                    <ul>
-                        <li>Calendario Inspectorial 2026</li>
-                        <li>Calendario 2026 [Obras]</li>
-                        <li>Viajes / Visitas [Interno]</li>
-                    </ul>
-
+                    <div class="link-list" data-home-links="calendarios"></div>
                 </div>
 
-                <!-- CASA INSPECTORIAL -->
-                <div class="info-item">
-
-                    <div class="placeholder-img">
-                        Imagen
-                    </div>
+                <div class="info-item" data-home-section="casa-inspectorial">
+                    <div class="placeholder-img">Imagen</div>
 
                     <h3>CASA INSPECTORIAL</h3>
 
-                    <ul>
-                        <li>Espacios C. Inspectorial</li>
-                        <li>Salidas / permisos</li>
-                        <li>Solicitud de gastos</li>
-                    </ul>
-
+                    <div class="link-list" data-home-links="casa-inspectorial"></div>
                 </div>
 
             </div>
 
             <h2>Calendario</h2>
 
-            <!-- Puedes reemplazar este calendario por Google Calendar -->
-            <iframe src="https://calendar.google.com/calendar/embed?src=es.cl%23holiday%40group.v.calendar.google.com"></iframe>
+            <iframe
+                title="Calendario"
+                src="https://calendar.google.com/calendar/embed?src=es.cl%23holiday%40group.v.calendar.google.com">
+            </iframe>
 
         </div>
 
@@ -344,21 +127,21 @@
 
                 <tbody>
                     <tr>
-                        <td>Actualización Indicadores Mayo</td>
-                        <td>Juan Pérez</td>
+                        <td>Actualizaci&oacute;n Indicadores Mayo</td>
+                        <td>Juan P&eacute;rez</td>
                         <td>15/08/2025</td>
                         <td>Pendiente</td>
                     </tr>
 
                     <tr>
-                        <td>Informe de Gestión</td>
-                        <td>María Soto</td>
+                        <td>Informe de Gesti&oacute;n</td>
+                        <td>Mar&iacute;a Soto</td>
                         <td>20/08/2025</td>
                         <td>En Proceso</td>
                     </tr>
 
                     <tr>
-                        <td>Validación Encuesta</td>
+                        <td>Validaci&oacute;n Encuesta</td>
                         <td>Equipo TI</td>
                         <td>25/08/2025</td>
                         <td>Pendiente</td>
@@ -368,213 +151,138 @@
 
         </div>
 
-    </div>
+    </section>
 
     <!-- PROCESOS -->
-    <div id="procesos" class="page">
+    <section id="procesos" class="page">
 
         <div class="card">
-
             <h2>Procesos e Indicadores</h2>
 
-            <p style="margin-bottom:15px;">
+            <p class="section-intro">
                 Seguimiento de procesos e indicadores institucionales.
             </p>
 
             <iframe
                 class="sheet-frame"
+                title="Procesos e Indicadores"
                 src="https://docs.google.com/spreadsheets/d/1VJT4s7DOkluQo9eLVigdzkDGBLkWrhfKf_mdiQJN8Qo/preview">
             </iframe>
-
         </div>
 
-    </div>
+    </section>
 
     <!-- EVALUACION 360 -->
-    <div id="evaluacion" class="page">
+    <section id="evaluacion" class="page">
 
         <div class="card">
-            <h2>Evaluación 360</h2>
+            <h2>Evaluaci&oacute;n 360</h2>
 
             <p>
-                Espacio destinado a resultados, formularios e informes de evaluación 360°.
+                Espacio destinado a resultados, formularios e informes de evaluaci&oacute;n 360&deg;.
             </p>
 
             <br>
 
             <ul>
-                <li>Autoevaluación</li>
-                <li>Evaluación de jefatura</li>
-                <li>Evaluación de pares</li>
+                <li>Autoevaluaci&oacute;n</li>
+                <li>Evaluaci&oacute;n de jefatura</li>
+                <li>Evaluaci&oacute;n de pares</li>
                 <li>Informe consolidado</li>
             </ul>
-
         </div>
 
-    </div>
+    </section>
 
     <!-- ANALISIS DE DATOS -->
-    <div id="datos" class="page">
+    <section id="datos" class="page">
 
-        <div class="card">
+        <div id="analyticsContent" class="analytics-content">
+            <div id="analyticsInformeSection" class="card" data-dashboard-section="informeColegios">
+                <h2>Informe por Colegios + Inscripci&oacute;n Pastoral</h2>
+                <p class="section-intro">
+                    Accesos por colegio a los paneles de Red Escuelas e Inscripci&oacute;n Pastoral.
+                </p>
 
-            <h2>Informe por Colegios + Inscripción Pastoral</h2>
+                <div class="dashboard-workspace" data-dashboard-panel="informeColegios">
+                    <aside class="dashboard-sidebar">
+                        <label class="search-label" for="informeColegiosSearch">Buscar colegio</label>
+                        <input
+                            id="informeColegiosSearch"
+                            class="dashboard-search"
+                            type="search"
+                            placeholder="Escribe para filtrar..."
+                            data-dashboard-search="informeColegios"
+                        >
 
-            <div class="dashboard-grid">
+                        <div
+                            id="informeColegiosList"
+                            class="dashboard-list"
+                            aria-label="Colegios disponibles">
+                        </div>
+                    </aside>
 
-                <div class="dashboard-card">
-                <button class="panel-btn" onclick="accesoColegio1()">
-                    Total Colegios
-                </button>
+                    <section class="dashboard-viewer" aria-live="polite">
+                        <div class="dashboard-viewer-header">
+                            <div>
+                                <span class="viewer-kicker">Selecci&oacute;n actual</span>
+                                <h3 id="informeColegiosTitle">Total Colegios</h3>
+                            </div>
+                        </div>
+
+                        <div id="informeColegiosViewer" class="dashboard-frame-grid"></div>
+                    </section>
                 </div>
-
-                <div class="dashboard-card">
-                    <a href="#">Colegio 1</a>
-                </div>
-
-                <div class="dashboard-card">
-                    <a href="#">Colegio 2</a>
-                </div>
-
-                <div class="dashboard-card">
-                    <a href="#">Colegio 3</a>
-                </div>
-
             </div>
 
-        </div>
+            <div id="analyticsEncuestaSection" class="card" data-dashboard-section="encuestaJuvenil">
+                <h2>Encuesta Juvenil Salesiana</h2>
+                <p class="section-intro">
+                    Accesos a los paneles de encuesta por grupo de respuesta.
+                </p>
 
-        <div class="card">
+                <div class="dashboard-workspace compact-sidebar" data-dashboard-panel="encuestaJuvenil">
+                    <aside class="dashboard-sidebar">
+                        <label class="search-label" for="encuestaJuvenilSearch">Buscar grupo</label>
+                        <input
+                            id="encuestaJuvenilSearch"
+                            class="dashboard-search"
+                            type="search"
+                            placeholder="Escribe para filtrar..."
+                            data-dashboard-search="encuestaJuvenil"
+                        >
 
-            <h2>Encuesta Juvenil Salesiana</h2>
+                        <div
+                            id="encuestaJuvenilList"
+                            class="dashboard-list"
+                            aria-label="Grupos disponibles">
+                        </div>
+                    </aside>
 
-            <div class="dashboard-grid">
+                    <section class="dashboard-viewer" aria-live="polite">
+                        <div class="dashboard-viewer-header">
+                            <div>
+                                <span class="viewer-kicker">Selecci&oacute;n actual</span>
+                                <h3 id="encuestaJuvenilTitle">J&oacute;venes - Colegios</h3>
+                            </div>
+                        </div>
 
-                <div class="dashboard-card dropdown-card">
-
-                    <button class="dropdown-btn">
-                        Jovenes_Colegios ▼
-                    </button>
-
-                    <div class="dropdown-content">
-                        <a href="#" onclick="showPage('ejsTodos')">Todos</a>
-                        <a href="#">Colegio 1</a>
-                        <a href="#">Colegio 2</a>
-                        <a href="#">Colegio 3</a>
-                    </div>
-
+                        <div id="encuestaJuvenilViewer" class="dashboard-frame-grid"></div>
+                    </section>
                 </div>
-
-                <div class="dashboard-card">
-                    <a href="#">Apoderados_Colegios</a>
-                </div>
-
-                <div class="dashboard-card">
-                    <a href="#">Educadores_Personal</a>
-                </div>
-
-                <div class="dashboard-card">
-                    <a href="#">Parroquias_Santuarios</a>
-                </div>
-
             </div>
-
         </div>
 
-    </div>
+    </section>
 
-    <!-- PANEL RED ESCUELAS -->
-    <div id="redEscuelas" class="page">
-
-        <div class="card">
-
-            <h2>Red escuelas</h2>
-
-            <iframe
-                title="Red escuelas"
-                src="https://app.powerbi.com/view?r=eyJrIjoiYjk1ZDZkYWYtMzBiNi00MjA5LTljNmEtN2FkNDAxMjI3ZWQwIiwidCI6ImExMmMxNDdiLTNhMGMtNGJhNi05MzRiLThhYzczOTFiYzg3NCIsImMiOjR9"
-                allowfullscreen="true">
-            </iframe>
-
-        </div>
-
-        <div class="card">
-
-            <h2>Inscripción Pastoral</h2>
-
-            <iframe
-                title="Inscripción Pastoral"
-                src="https://app.powerbi.com/view?r=eyJrIjoiMWQxOTZiYjctMDA3ZS00Nzg5LThmNDktYmVhNmM1NWI0Njg4IiwidCI6ImExMmMxNDdiLTNhMGMtNGJhNi05MzRiLThhYzczOTFiYzg3NCIsImMiOjR9"
-                allowfullscreen="true">
-            </iframe>
-
-        </div>
-
-        <div class="card" style="text-align:center;">
-
-            <button class="panel-btn" onclick="showPage('datos')">
-                ← Volver a Análisis de Datos
-            </button>
-
-        </div>
-
-    </div>
-
-    <!-- ENCUESTA JUVENIL SALESIANA - TODOS -->
-    <div id="ejsTodos" class="page">
-
-        <div class="card">
-
-            <h2>Encuesta Juvenil Salesiana - Todos</h2>
-
-            <iframe
-                title="Encuesta Juvenil Salesiana"
-                src="https://app.powerbi.com/view?r=eyJrIjoiNmVhNmY3YjctMjIxNC00YWNmLTg2M2UtNjRjMTUzZGYyNDgyIiwidCI6ImExMmMxNDdiLTNhMGMtNGJhNi05MzRiLThhYzczOTFiYzg3NCIsImMiOjR9"
-                allowfullscreen="true">
-            </iframe>
-
-        </div>
-
-        <div class="card" style="text-align:center;">
-
-            <button class="panel-btn" onclick="showPage('datos')">
-                ← Volver a Análisis de Datos
-            </button>
-
-        </div>
-
-    </div>
+</main>
 
 </div>
 
-</div>
-
-<script>
-function showPage(pageId){
-
-    const pages = document.querySelectorAll('.page');
-
-    pages.forEach(page=>{
-        page.classList.remove('active');
-    });
-
-    document.getElementById(pageId).classList.add('active');
-}
-
-function accesoColegio1(){
-
-    const password = prompt("Ingrese la contraseña:");
-
-    if(password === "colegio123"){
-        showPage('redEscuelas');
-    } else if(password !== null){
-        alert("Contraseña incorrecta");
-    }
-}
-</script>
-
+<script src="js/site-config.js"></script>
+<script src="js/home-links.js"></script>
+<script src="js/dashboard-data.js"></script>
+<script src="js/users.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>
-
-
-
