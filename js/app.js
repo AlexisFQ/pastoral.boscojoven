@@ -1,4 +1,10 @@
-const dashboardState = {};
+const analyticsState = {
+    groupId: null,
+    categoryId: null,
+    itemId: null,
+    filter: '',
+};
+
 let currentUser = null;
 let currentPassword = '';
 
@@ -73,9 +79,7 @@ function lockApp() {
 
     currentUser = null;
     currentPassword = '';
-
-    clearDashboardPanel('informeColegios');
-    clearDashboardPanel('encuestaJuvenil');
+    resetAnalyticsState();
 
     if (login) {
         login.classList.remove('is-hidden');
@@ -192,31 +196,356 @@ function renderHomeLinks() {
 }
 
 function setupAnalyticsArea() {
-    if (!hasPermission('modules', 'datos')) {
-        setupAnalyticsSection('informeColegios', 'analyticsInformeSection', false);
-        setupAnalyticsSection('encuestaJuvenil', 'analyticsEncuestaSection', false);
+    const searchInput = document.getElementById('analyticsSearch');
+
+    if (searchInput) {
+        searchInput.value = '';
+        searchInput.oninput = () => {
+            analyticsState.filter = normalizeText(searchInput.value);
+            renderAnalyticsItemList();
+        };
+    }
+
+    const [firstGroup] = getPermittedAnalyticsGroups();
+
+    if (!firstGroup || !hasPermission('modules', 'datos')) {
+        renderAnalyticsNoAccess();
         return;
     }
 
-    setupAnalyticsSection('informeColegios', 'analyticsInformeSection');
-    setupAnalyticsSection('encuestaJuvenil', 'analyticsEncuestaSection');
+    selectAnalyticsGroup(firstGroup.id);
 }
 
-function setupAnalyticsSection(sectionKey, containerId, forceAllowed = null) {
-    const container = document.getElementById(containerId);
-    const isAllowed = forceAllowed ?? hasPermission('dashboardSections', sectionKey);
+function selectAnalyticsGroup(groupId) {
+    const group = getPermittedAnalyticsGroups().find((currentGroup) => currentGroup.id === groupId);
 
-    if (!container) {
+    if (!group) {
         return;
     }
 
-    container.classList.toggle('is-hidden', !isAllowed);
+    analyticsState.groupId = group.id;
+    analyticsState.categoryId = getFirstPermittedCategoryId(group);
+    analyticsState.itemId = null;
+    analyticsState.filter = '';
 
-    if (isAllowed) {
-        setupDashboardPanel(sectionKey);
-    } else {
-        clearDashboardPanel(sectionKey);
+    const searchInput = document.getElementById('analyticsSearch');
+
+    if (searchInput) {
+        searchInput.value = '';
     }
+
+    renderAnalyticsShell();
+}
+
+function selectAnalyticsCategory(categoryId) {
+    const group = getCurrentAnalyticsGroup();
+
+    if (!group?.categories || !isPermittedCategory(categoryId)) {
+        return;
+    }
+
+    analyticsState.categoryId = categoryId;
+    analyticsState.itemId = null;
+    analyticsState.filter = '';
+
+    const searchInput = document.getElementById('analyticsSearch');
+
+    if (searchInput) {
+        searchInput.value = '';
+    }
+
+    renderAnalyticsShell();
+}
+
+function selectAnalyticsItem(itemId) {
+    const item = getPermittedAnalyticsItems().find((currentItem) => currentItem.id === itemId);
+
+    if (!item) {
+        return;
+    }
+
+    analyticsState.itemId = item.id;
+    renderAnalyticsItemList();
+    renderAnalyticsViewer(item);
+}
+
+function renderAnalyticsShell() {
+    renderAnalyticsTabs();
+    renderAnalyticsCategoryTabs();
+    renderAnalyticsHeader();
+    renderAnalyticsItemList();
+
+    const [firstItem] = getPermittedAnalyticsItems();
+
+    if (firstItem) {
+        selectAnalyticsItem(firstItem.id);
+    } else {
+        renderAnalyticsEmpty('Sin accesos asignados para esta sección.');
+    }
+}
+
+function renderAnalyticsTabs() {
+    const tabs = document.getElementById('analyticsTabs');
+    const groups = getPermittedAnalyticsGroups();
+
+    if (!tabs) {
+        return;
+    }
+
+    tabs.innerHTML = '';
+
+    groups.forEach((group) => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'analytics-tab';
+        button.textContent = group.label;
+        button.classList.toggle('active', group.id === analyticsState.groupId);
+        button.addEventListener('click', () => selectAnalyticsGroup(group.id));
+        tabs.appendChild(button);
+    });
+}
+
+function renderAnalyticsCategoryTabs() {
+    const tabs = document.getElementById('analyticsCategoryTabs');
+    const group = getCurrentAnalyticsGroup();
+
+    if (!tabs) {
+        return;
+    }
+
+    tabs.innerHTML = '';
+    tabs.classList.toggle('is-hidden', !group?.categories);
+
+    if (!group?.categories) {
+        return;
+    }
+
+    getPermittedCategories(group).forEach((category) => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'analytics-tab';
+        button.textContent = category.label;
+        button.classList.toggle('active', category.id === analyticsState.categoryId);
+        button.addEventListener('click', () => selectAnalyticsCategory(category.id));
+        tabs.appendChild(button);
+    });
+}
+
+function renderAnalyticsHeader() {
+    const title = document.getElementById('analyticsTitle');
+    const description = document.getElementById('analyticsDescription');
+    const searchLabel = document.getElementById('analyticsSearchLabel');
+    const group = getCurrentAnalyticsGroup();
+    const category = getCurrentAnalyticsCategory();
+
+    if (title) {
+        title.textContent = category ? `${group.label}: ${category.label}` : group.label;
+    }
+
+    if (description) {
+        description.textContent = group.description;
+    }
+
+    if (searchLabel) {
+        searchLabel.textContent = category?.selectorLabel || group.selectorLabel || 'Buscar';
+    }
+}
+
+function renderAnalyticsItemList() {
+    const list = document.getElementById('analyticsItemList');
+    const items = getPermittedAnalyticsItems().filter((item) => {
+        return normalizeText(item.label).includes(analyticsState.filter);
+    });
+
+    if (!list) {
+        return;
+    }
+
+    list.innerHTML = '';
+
+    if (items.length === 0) {
+        const empty = document.createElement('p');
+        empty.className = 'dashboard-list-empty';
+        empty.textContent = 'Sin resultados';
+        list.appendChild(empty);
+        return;
+    }
+
+    items.forEach((item) => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'dashboard-list-item';
+        button.textContent = item.label;
+        button.classList.toggle('active', item.id === analyticsState.itemId);
+        button.setAttribute('aria-pressed', item.id === analyticsState.itemId ? 'true' : 'false');
+        button.addEventListener('click', () => selectAnalyticsItem(item.id));
+        list.appendChild(button);
+    });
+}
+
+async function renderAnalyticsViewer(item) {
+    const selectedTitle = document.getElementById('analyticsSelectedTitle');
+    const viewer = document.getElementById('analyticsViewer');
+
+    if (selectedTitle) {
+        selectedTitle.textContent = item.label;
+    }
+
+    if (!viewer) {
+        return;
+    }
+
+    viewer.innerHTML = '';
+
+    const frameBlock = document.createElement('article');
+    frameBlock.className = 'dashboard-frame';
+
+    const title = document.createElement('h4');
+    title.textContent = item.dashboard.title;
+    frameBlock.appendChild(title);
+
+    const url = await getDashboardUrl(item.dashboard);
+
+    if (url) {
+        const frame = document.createElement('iframe');
+        frame.title = item.dashboard.title;
+        frame.src = url;
+        frame.loading = 'lazy';
+        frame.allowFullscreen = true;
+        frameBlock.appendChild(frame);
+    } else {
+        const emptyMessage = document.createElement('div');
+        emptyMessage.className = 'empty-dashboard';
+        emptyMessage.textContent = 'URL pendiente por configurar';
+        frameBlock.appendChild(emptyMessage);
+    }
+
+    viewer.appendChild(frameBlock);
+}
+
+function renderAnalyticsNoAccess() {
+    renderAnalyticsEmpty('Este usuario no tiene acceso a Análisis de Datos.');
+}
+
+function renderAnalyticsEmpty(message) {
+    const title = document.getElementById('analyticsTitle');
+    const description = document.getElementById('analyticsDescription');
+    const tabs = document.getElementById('analyticsTabs');
+    const categoryTabs = document.getElementById('analyticsCategoryTabs');
+    const list = document.getElementById('analyticsItemList');
+    const selectedTitle = document.getElementById('analyticsSelectedTitle');
+    const viewer = document.getElementById('analyticsViewer');
+
+    if (title) {
+        title.textContent = 'Análisis de Datos';
+    }
+
+    if (description) {
+        description.textContent = message;
+    }
+
+    if (tabs) {
+        tabs.innerHTML = '';
+    }
+
+    if (categoryTabs) {
+        categoryTabs.innerHTML = '';
+        categoryTabs.classList.add('is-hidden');
+    }
+
+    if (list) {
+        list.innerHTML = '';
+    }
+
+    if (selectedTitle) {
+        selectedTitle.textContent = 'Sin selección';
+    }
+
+    if (viewer) {
+        viewer.innerHTML = '';
+        const emptyMessage = document.createElement('div');
+        emptyMessage.className = 'empty-dashboard';
+        emptyMessage.textContent = message;
+        viewer.appendChild(emptyMessage);
+    }
+}
+
+function resetAnalyticsState() {
+    analyticsState.groupId = null;
+    analyticsState.categoryId = null;
+    analyticsState.itemId = null;
+    analyticsState.filter = '';
+    renderAnalyticsEmpty('Ingresa para visualizar tus dashboards.');
+}
+
+function getPermittedAnalyticsGroups() {
+    const allowedGroups = currentUser?.permissions?.analyticsGroups || [];
+    const groups = Object.entries(window.analyticsDashboards || {}).map(([id, group]) => ({ id, ...group }));
+
+    if (allowedGroups.includes('*')) {
+        return groups;
+    }
+
+    return groups.filter((group) => allowedGroups.includes(group.id));
+}
+
+function getCurrentAnalyticsGroup() {
+    return getPermittedAnalyticsGroups().find((group) => group.id === analyticsState.groupId);
+}
+
+function getCurrentAnalyticsCategory() {
+    const group = getCurrentAnalyticsGroup();
+
+    if (!group?.categories || !analyticsState.categoryId) {
+        return null;
+    }
+
+    const category = group.categories[analyticsState.categoryId];
+
+    return category ? { id: analyticsState.categoryId, ...category } : null;
+}
+
+function getPermittedCategories(group) {
+    if (!group?.categories) {
+        return [];
+    }
+
+    const allowedCategories = currentUser?.permissions?.encuestaJuvenilCategories || [];
+    const categories = Object.entries(group.categories).map(([id, category]) => ({ id, ...category }));
+
+    if (allowedCategories.includes('*')) {
+        return categories;
+    }
+
+    return categories.filter((category) => allowedCategories.includes(category.id));
+}
+
+function getFirstPermittedCategoryId(group) {
+    const [firstCategory] = getPermittedCategories(group);
+
+    return firstCategory?.id || null;
+}
+
+function isPermittedCategory(categoryId) {
+    return getPermittedCategories(getCurrentAnalyticsGroup()).some((category) => category.id === categoryId);
+}
+
+function getPermittedAnalyticsItems() {
+    const group = getCurrentAnalyticsGroup();
+    const category = getCurrentAnalyticsCategory();
+    const permissionKey = category?.id || group?.id;
+    const sourceItems = category?.items || group?.items || [];
+    const allowedItems = currentUser?.permissions?.[permissionKey] || [];
+
+    if (!permissionKey || allowedItems.length === 0) {
+        return [];
+    }
+
+    if (allowedItems.includes('*')) {
+        return sourceItems;
+    }
+
+    return sourceItems.filter((item) => allowedItems.includes(item.id));
 }
 
 function hasPermission(permissionKey, value) {
@@ -230,199 +559,6 @@ function showLoginMessage(message) {
 
     if (messageElement) {
         messageElement.textContent = message;
-    }
-}
-
-function setupDashboardPanel(sectionKey) {
-    const section = window.dashboardData?.[sectionKey];
-    const permittedItems = getPermittedItems(sectionKey);
-    const firstItem = permittedItems[0];
-
-    if (!section) {
-        return;
-    }
-
-    dashboardState[sectionKey] = {
-        selectedId: firstItem?.id || null,
-        filter: '',
-    };
-
-    const searchInput = document.querySelector(`[data-dashboard-search="${sectionKey}"]`);
-
-    if (searchInput) {
-        searchInput.value = '';
-        searchInput.replaceWith(searchInput.cloneNode(true));
-    }
-
-    const freshSearchInput = document.querySelector(`[data-dashboard-search="${sectionKey}"]`);
-
-    if (freshSearchInput) {
-        freshSearchInput.addEventListener('input', () => {
-            dashboardState[sectionKey].filter = normalizeText(freshSearchInput.value);
-            renderDashboardList(sectionKey);
-        });
-    }
-
-    renderDashboardList(sectionKey);
-
-    if (firstItem) {
-        selectDashboardItem(sectionKey, firstItem.id);
-    } else {
-        renderNoPermissionState(sectionKey);
-    }
-}
-
-function clearDashboardPanel(sectionKey) {
-    const list = document.getElementById(`${sectionKey}List`);
-    const viewer = document.getElementById(`${sectionKey}Viewer`);
-    const searchInput = document.querySelector(`[data-dashboard-search="${sectionKey}"]`);
-
-    delete dashboardState[sectionKey];
-
-    if (list) {
-        list.innerHTML = '';
-    }
-
-    if (viewer) {
-        viewer.innerHTML = '';
-    }
-
-    if (searchInput) {
-        searchInput.value = '';
-    }
-}
-
-function renderDashboardList(sectionKey) {
-    const list = document.getElementById(`${sectionKey}List`);
-    const state = dashboardState[sectionKey];
-    const permittedItems = getPermittedItems(sectionKey);
-
-    if (!list || !state) {
-        return;
-    }
-
-    const filteredItems = permittedItems.filter((item) => {
-        return normalizeText(item.label).includes(state.filter);
-    });
-
-    list.innerHTML = '';
-
-    if (filteredItems.length === 0) {
-        const empty = document.createElement('p');
-        empty.className = 'dashboard-list-empty';
-        empty.textContent = 'Sin resultados';
-        list.appendChild(empty);
-        return;
-    }
-
-    filteredItems.forEach((item) => {
-        const button = document.createElement('button');
-        button.type = 'button';
-        button.className = 'dashboard-list-item';
-        button.textContent = item.label;
-        button.dataset.itemId = item.id;
-        button.setAttribute('aria-pressed', item.id === state.selectedId ? 'true' : 'false');
-
-        if (item.id === state.selectedId) {
-            button.classList.add('active');
-        }
-
-        button.addEventListener('click', () => {
-            selectDashboardItem(sectionKey, item.id);
-        });
-
-        list.appendChild(button);
-    });
-}
-
-function selectDashboardItem(sectionKey, itemId) {
-    const item = getPermittedItems(sectionKey).find((currentItem) => currentItem.id === itemId);
-
-    if (!item) {
-        return;
-    }
-
-    dashboardState[sectionKey].selectedId = item.id;
-
-    const title = document.getElementById(`${sectionKey}Title`);
-
-    if (title) {
-        title.textContent = item.label;
-    }
-
-    renderDashboardFrames(sectionKey, item.dashboards);
-    renderDashboardList(sectionKey);
-}
-
-function getPermittedItems(sectionKey) {
-    const section = window.dashboardData?.[sectionKey];
-    const allowedIds = currentUser?.permissions?.[sectionKey] || [];
-
-    if (!section || allowedIds.length === 0) {
-        return [];
-    }
-
-    if (allowedIds.includes('*')) {
-        return section.items;
-    }
-
-    return section.items.filter((item) => allowedIds.includes(item.id));
-}
-
-function renderNoPermissionState(sectionKey) {
-    const title = document.getElementById(`${sectionKey}Title`);
-    const viewerContent = document.getElementById(`${sectionKey}Viewer`);
-
-    if (title) {
-        title.textContent = 'Sin accesos asignados';
-    }
-
-    if (!viewerContent) {
-        return;
-    }
-
-    viewerContent.innerHTML = '';
-
-    const emptyMessage = document.createElement('div');
-    emptyMessage.className = 'empty-dashboard';
-    emptyMessage.textContent = 'Este usuario no tiene permisos para esta sección.';
-    viewerContent.appendChild(emptyMessage);
-}
-
-async function renderDashboardFrames(sectionKey, dashboards) {
-    const viewerContent = document.getElementById(`${sectionKey}Viewer`);
-
-    if (!viewerContent) {
-        return;
-    }
-
-    viewerContent.innerHTML = '';
-
-    for (const dashboard of dashboards) {
-        const frameBlock = document.createElement('article');
-        frameBlock.className = 'dashboard-frame';
-
-        const title = document.createElement('h4');
-        title.textContent = dashboard.title;
-        frameBlock.appendChild(title);
-
-        const url = await getDashboardUrl(dashboard);
-
-        if (url) {
-            const frame = document.createElement('iframe');
-            frame.title = dashboard.title;
-            frame.src = url;
-            frame.loading = 'lazy';
-            frame.allowFullscreen = true;
-            frameBlock.appendChild(frame);
-        } else {
-            const emptyMessage = document.createElement('div');
-            emptyMessage.className = 'empty-dashboard';
-            emptyMessage.textContent = 'URL pendiente por configurar';
-            frameBlock.appendChild(emptyMessage);
-        }
-
-        viewerContent.appendChild(frameBlock);
     }
 }
 
