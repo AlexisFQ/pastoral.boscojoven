@@ -293,6 +293,51 @@ iframe {
     font-weight: bold;
 }
 
+.analytics-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.analytics-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 14px;
+}
+
+.secondary-tabs {
+    padding-top: 4px;
+    margin-bottom: 16px;
+}
+
+.analytics-tab {
+    min-height: 38px;
+    padding: 9px 14px;
+    background: #FCFAFB;
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.analytics-tab:hover {
+    background: var(--color-surface-muted);
+    border-color: var(--color-primary-soft);
+}
+
+.analytics-tab.active {
+    background: var(--color-primary);
+    color: white;
+    border-color: var(--color-primary);
+}
+
+.secondary-tabs .analytics-tab.active {
+    background: var(--color-secondary);
+    border-color: var(--color-secondary);
+}
+
 .secondary-btn {
     background: white;
     color: var(--color-primary-dark);
