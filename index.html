@@ -197,79 +197,46 @@
     <!-- ANALISIS DE DATOS -->
     <section id="datos" class="page">
 
-        <div id="analyticsContent" class="analytics-content">
-            <div id="analyticsInformeSection" class="card" data-dashboard-section="informeColegios">
-                <h2>Informe por Colegios + Inscripci&oacute;n Pastoral</h2>
-                <p class="section-intro">
-                    Accesos por colegio a los paneles de Red Escuelas e Inscripci&oacute;n Pastoral.
-                </p>
-
-                <div class="dashboard-workspace" data-dashboard-panel="informeColegios">
-                    <aside class="dashboard-sidebar">
-                        <label class="search-label" for="informeColegiosSearch">Buscar colegio</label>
-                        <input
-                            id="informeColegiosSearch"
-                            class="dashboard-search"
-                            type="search"
-                            placeholder="Escribe para filtrar..."
-                            data-dashboard-search="informeColegios"
-                        >
-
-                        <div
-                            id="informeColegiosList"
-                            class="dashboard-list"
-                            aria-label="Colegios disponibles">
-                        </div>
-                    </aside>
-
-                    <section class="dashboard-viewer" aria-live="polite">
-                        <div class="dashboard-viewer-header">
-                            <div>
-                                <span class="viewer-kicker">Selecci&oacute;n actual</span>
-                                <h3 id="informeColegiosTitle">Total Colegios</h3>
-                            </div>
-                        </div>
-
-                        <div id="informeColegiosViewer" class="dashboard-frame-grid"></div>
-                    </section>
+        <div id="analyticsContent" class="card analytics-content">
+            <div class="analytics-header">
+                <div>
+                    <h2 id="analyticsTitle">An&aacute;lisis de Datos</h2>
+                    <p id="analyticsDescription" class="section-intro">
+                        Selecciona una familia de dashboards y luego el total o colegio que quieres revisar.
+                    </p>
                 </div>
             </div>
 
-            <div id="analyticsEncuestaSection" class="card" data-dashboard-section="encuestaJuvenil">
-                <h2>Encuesta Juvenil Salesiana</h2>
-                <p class="section-intro">
-                    Accesos a los paneles de encuesta por grupo de respuesta.
-                </p>
+            <div id="analyticsTabs" class="analytics-tabs" aria-label="Familias de dashboards"></div>
+            <div id="analyticsCategoryTabs" class="analytics-tabs secondary-tabs" aria-label="Tipos de encuesta"></div>
 
-                <div class="dashboard-workspace compact-sidebar" data-dashboard-panel="encuestaJuvenil">
-                    <aside class="dashboard-sidebar">
-                        <label class="search-label" for="encuestaJuvenilSearch">Buscar grupo</label>
-                        <input
-                            id="encuestaJuvenilSearch"
-                            class="dashboard-search"
-                            type="search"
-                            placeholder="Escribe para filtrar..."
-                            data-dashboard-search="encuestaJuvenil"
-                        >
+            <div class="dashboard-workspace">
+                <aside class="dashboard-sidebar">
+                    <label id="analyticsSearchLabel" class="search-label" for="analyticsSearch">Buscar colegio</label>
+                    <input
+                        id="analyticsSearch"
+                        class="dashboard-search"
+                        type="search"
+                        placeholder="Escribe para filtrar..."
+                    >
 
-                        <div
-                            id="encuestaJuvenilList"
-                            class="dashboard-list"
-                            aria-label="Grupos disponibles">
+                    <div
+                        id="analyticsItemList"
+                        class="dashboard-list"
+                        aria-label="Opciones disponibles">
+                    </div>
+                </aside>
+
+                <section class="dashboard-viewer" aria-live="polite">
+                    <div class="dashboard-viewer-header">
+                        <div>
+                            <span class="viewer-kicker">Selecci&oacute;n actual</span>
+                            <h3 id="analyticsSelectedTitle">Total</h3>
                         </div>
-                    </aside>
+                    </div>
 
-                    <section class="dashboard-viewer" aria-live="polite">
-                        <div class="dashboard-viewer-header">
-                            <div>
-                                <span class="viewer-kicker">Selecci&oacute;n actual</span>
-                                <h3 id="encuestaJuvenilTitle">J&oacute;venes - Colegios</h3>
-                            </div>
-                        </div>
-
-                        <div id="encuestaJuvenilViewer" class="dashboard-frame-grid"></div>
-                    </section>
-                </div>
+                    <div id="analyticsViewer" class="dashboard-frame-grid"></div>
+                </section>
             </div>
         </div>
 
